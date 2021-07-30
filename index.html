@@ -1,334 +1,449 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Speech to text demo</title>
+<html lang="en">
+
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Taxpert Speech</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+
+        .container {
+            background-color: aliceblue;
+        }
+
+        p {
+            color: white;
+        }
+
+        button {
+            margin-top: 16px;
+        }
+
+        select {
+            margin-top: 16px;
+        }
+
+    </style>
 </head>
-<style>
-  * {
-    font-family: Verdana, Arial, sans-serif;
-  }
-  a:link {
-    color:#000;
-    text-decoration: none;
-  }
-  a:visited {
-    color:#000;
-  }
-  a:hover {
-    color:#33F;
-  }
-  .button {
-    background: -webkit-linear-gradient(top,#008dfd 0,#0370ea 100%);
-    border: 1px solid #076bd2;
-    border-radius: 3px;
-    color: #fff;
-    display: none;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 1.3;
-    padding: 8px 25px;
-    text-align: center;
-    text-shadow: 1px 1px 1px #076bd2;
-    letter-spacing: normal;
-  }
-  .center {
-    padding: 10px;
-    text-align: center;
-  }
-  .final {
-    color: black;
-    padding-right: 3px; 
-  }
-  .interim {
-    color: gray;
-  }
-  .info {
-    font-size: 14px;
-    text-align: center;
-    color: #777;
-    display: none;
-  }
-  .right {
-    float: right;
-  }
-  .sidebyside {
-    display: inline-block;
-    width: 45%;
-    min-height: 40px;
-    text-align: left;
-    vertical-align: top;
-  }
-  #headline {
-    font-size: 40px;
-    font-weight: 300;
-  }
-  #info {
-    font-size: 20px;
-    text-align: center;
-    color: #777;
-    visibility: hidden;
-  }
-  #results {
-    font-size: 14px;
-    font-weight: bold;
-    border: 1px solid rgb(136, 122, 122);
-    padding: 15px;
-    text-align: left;
-    min-height: 150px;
-  }
-  #start_button {
-    border: 0;
-    background-color:transparent;
-    padding: 0;
-  }
-</style>
-<body class="container">
-  <div class="jumbotron">
-<h1 class="center" id="headline">
-    Speech to text demo</h1>
-<div id="info">
-  <p id="info_start">Click on the microphone to start</p>
-  <p id="info_speak_now">Speak now.</p>
-  <p id="info_no_speech">No speech was detected. You may need to adjust your
-      microphone settings.</p>
-  <p id="info_no_microphone" style="display:none">
-    No microphone was found. Ensure that a microphone is installed and that
-    microphone settings are configured correctly.</p>
-  <p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
-  <p id="info_denied">Permission to use microphone was denied.</p>
-  <p id="info_blocked">Permission to use microphone is blocked. To change,
-    go to chrome://settings/contentExceptions#media-stream</p>
-  <p id="info_upgrade">Web Speech API is not supported by this browser.
-     Upgrade to <a href="//www.google.com/chrome">Chrome</a>
-     version 25 or later.</p>
-</div>
-<div class="center">
-<button id="start_button" onclick="startButton(event)">
-  <img id="start_img" src="microphone.png" height="50" width="50" alt="Start"></button>
-</div>
-</div>
-<div id="results">
-  <span id="final_span" class="final"></span>
-  <span id="interim_span" class="interim"></span>
-  <p>
-</div>
-<div class="center">
-  <div id="div_language">
-    <select id="select_language" onchange="updateCountry()"></select>
-    &nbsp;&nbsp;
-    <select id="select_dialect"></select>
-  </div>
-</div>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+            Taxpert Speech
+        </a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="">
+                        For Enquiry Contact:- 0000000000
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <section class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6" style="background-color: dodgerblue;height:800px">
+                    <div id="div_language">
+                        <select class="form-control" id="select_language" onchange="updateCountry()"></select>
+                        <select class="form-control" id="select_dialect"></select>
+                    </div>
+                    <div id="info">
+                        <p id="info_start">Click on the microphone to start</p>
+                        <p id="info_speak_now">Speak now.</p>
+                        <p id="info_no_speech">No speech was detected. You may need to adjust your
+                            microphone settings.</p>
+                        <p id="info_no_microphone" style="display:none">
+                            No microphone was found. Ensure that a microphone is installed and that
+                            microphone settings are configured correctly.</p>
+                        <p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
+                        <p id="info_denied">Permission to use microphone was denied.</p>
+                        <p id="info_blocked">Permission to use microphone is blocked. To change,
+                            go to chrome://settings/contentExceptions#media-stream</p>
+                        <p id="info_upgrade">Web Speech API is not supported by this browser.
+                            Upgrade to <a href="//www.google.com/chrome">Chrome</a>
+                            version 25 or later.</p>
+                    </div>
+                    <button class="btn btn-success" id="start_button" onclick="startButton(event)">Start</button>
+                    <button class="btn btn-danger" id="stop_button" onclick="stopButton(event)">Stop</button>
+                    <div id="results" style="background-color: rgb(255, 255, 255); height:400px; width:100%">
+                        <span id="final_span" class="final"></span>
+                        <span id="interim_span" class="interim"></span>
+                        <p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h1>Commands</h1>
+                    <ul class="list-group">
+                        <li class="list-group-item">Full stop (.)</li>
+                        <li class="list-group-item">Comma (,)</li>
+                        <li class="list-group-item">Question mark (?)</li>
+                        <li class="list-group-item">Exclamation mark (!)</li>
+                        <li class="list-group-item">Slash (/)</li>
+                        <li class="list-group-item">Hyphen (-)</li>
+                        <li class="list-group-item">Underscore (_)</li>
+                        <li class="list-group-item">Star Symbol (*)</li>
+                        <li class="list-group-item">And Symbol (&)</li>
+                        <li class="list-group-item">Percentage Symbol (%)</li>
+                        <li class="list-group-item">Slash hyphen (/-)</li>
+                        <li class="list-group-item">Rupee Symbol (₹)</li>
+                        <li class="list-group-item">Dollar Symbol ($)</li>
+                        <li class="list-group-item">At the rate (@)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Select2 -->
+    <script src="../../plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/jquery.inputmask.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script>
+        var is_Stop = false;
+        var langs = [
+            ['Bengali ', ['bn-IN']],
+            ['English', ['en-AU', 'Australia'],
+                ['en-CA', 'Canada'],
+                ['en-IN', 'India'],
+                ['en-NZ', 'New Zealand'],
+                ['en-ZA', 'South Africa'],
+                ['en-GB', 'United Kingdom'],
+                ['en-US', 'United States']
+            ],
+            ['Hindi', ['hi-IN']],
+            ['Gujarati', ['gu-IN']],
+            ['Kannada', ['kn-IN']],
+            ['Malayalam', ['ml-IN']],
+            ['Marathi', ['mr-IN']],
+            ['Punjabi', ['pa-Guru-IN']],
+            ['Tamil', ['ta-IN']],
+            ['Telugu', ['te-IN']],
+            ['Urdu', ['ur-IN']]
+        ];
+
+        for (var i = 0; i < langs.length; i++) {
+            select_language.options[i] = new Option(langs[i][0], i);
+        }
+        select_language.selectedIndex = 0;
+        updateCountry();
+        select_dialect.selectedIndex = 0;
+        showInfo('info_start');
+
+        function updateCountry() {
+            for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+                select_dialect.remove(i);
+            }
+            var list = langs[select_language.selectedIndex];
+            for (var i = 1; i < list.length; i++) {
+                select_dialect.options.add(new Option(list[i][1], list[i][0]));
+            }
+            select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+        }
+
+        var create_email = false;
+        var final_transcript = '';
+        var recognizing = false;
+        var ignore_onend;
+        var start_timestamp;
+        if (!('webkitSpeechRecognition' in window)) {
+            upgrade();
+        } else {
+            start_button.style.display = 'inline-block';
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onstart = function() {
+                recognizing = true;
+                showInfo('info_speak_now');
+            };
+
+            recognition.onerror = function(event) {
+                console.log(event.error);
+                if (event.error == 'no-speech') {
+                    showInfo('info_no_speech');
+                    ignore_onend = true;
+                }
+                if (event.error == 'audio-capture') {
+                    showInfo('info_no_microphone');
+                    ignore_onend = true;
+                }
+                if (event.error == 'not-allowed') {
+                    if (event.timeStamp - start_timestamp < 100) {
+                        showInfo('info_blocked');
+                    } else {
+                        showInfo('info_denied');
+                    }
+                    ignore_onend = true;
+                }
+            };
+
+            recognition.onend = function() {
+                recognizing = false;
+                if (ignore_onend) {
+                    return;
+                }
+                if (!final_transcript) {
+                    showInfo('info_start');
+                    return;
+                }
+                showInfo('');
+                if (window.getSelection) {
+                    window.getSelection().removeAllRanges();
+                    var range = document.createRange();
+                    range.selectNode(document.getElementById('final_span'));
+                    window.getSelection().addRange(range);
+                }
+                if (create_email) {
+                    create_email = false;
+                    createEmail();
+                }
+                console.log('onend');
+                if (!is_Stop) {
+                    recognition.start();
+                }
+            };
+
+            recognition.onresult = function(event) {
+                var interim_transcript = '';
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        //period command
+                        if (event.results[i][0].transcript == "full stop" || event.results[i][0].transcript ==
+                            "फुल स्टॉप") {
+                            final_transcript += ". ";
+
+                            //new line
+                        } else if (event.results[i][0].transcript == "new line" || event.results[i][0].transcript ==
+                            "") {
+                            final_transcript += "<br> ";
+
+                            //comma
+                        } else if (event.results[i][0].transcript == "comma" || event.results[i][0].transcript ==
+                            "फुल स्टॉप") {
+                            final_transcript += ", ";
+
+                            //question mark
+                        } else if (event.results[i][0].transcript == "question mark" || event.results[i][0]
+                            .transcript == "क्वेश्चन मार्क") {
+                            final_transcript += "? ";
+
+                            //exclamation mark
+                        } else if (event.results[i][0].transcript == "exclamation mark" || event.results[i][0]
+                            .transcript == "एक्सक्लेमेशन मार्क") {
+                            final_transcript += "! ";
+
+                            //slash
+                        } else if (event.results[i][0].transcript == "slash" || event.results[i][0].transcript ==
+                            "स्लैश") {
+                            final_transcript += "/ ";
+
+                            //hyphen
+                        } else if (event.results[i][0].transcript == "hyphen" || event.results[i][0].transcript ==
+                            "हैफ़ेन") {
+                            final_transcript += "- ";
+
+                            //underscore
+                        } else if (event.results[i][0].transcript == "underscore" || event.results[i][0].transcript ==
+                            "अंडरस्कोर") {
+                            final_transcript += "_ ";
+
+                            //star symbol
+                        } else if (event.results[i][0].transcript == "star symbol" || event.results[i][0].transcript ==
+                            "स्टार सिंबल") {
+                            final_transcript += "* ";
+
+                            //and symbol
+                        } else if (event.results[i][0].transcript == "and symbol" || event.results[i][0].transcript ==
+                            "एंड सिंबल") {
+                            final_transcript += "& ";
+
+                            //percentage symbol
+                        } else if (event.results[i][0].transcript == "percentage symbol" || event.results[i][0]
+                            .transcript == "परसेंटेज सिंबल") {
+                            final_transcript += "% ";
+
+                            //slash hypen
+                        } else if (event.results[i][0].transcript == "slash hyphen" || event.results[i][0].transcript ==
+                            "स्लैश हैफ़ेन") {
+                            final_transcript += "/- ";
+
+                            //rupee symbol
+                        } else if (event.results[i][0].transcript == "rupee symbol" || event.results[i][0].transcript ==
+                            "रूपी सिंबल") {
+                            final_transcript += "₹ ";
+
+                            //Dollar symbol
+                        } else if (event.results[i][0].transcript == "dollar symbol" || event.results[i][0]
+                            .transcript == "डॉलर सिंबल") {
+                            final_transcript += "$ ";
+
+                            //at the rate symbol
+                        } else if (event.results[i][0].transcript == "at the rate symbol" || event.results[i][0]
+                            .transcript == "एट द रेट सिंबल") {
+                            final_transcript += "@ ";
+
+                        } else {
+                            final_transcript += event.results[i][0].transcript + " ";
+                            console.log(event.results[i][0].transcript)
+                        }
+                        console.log('final');
+                        recognition.stop();
+                        //recognition.start();
+
+                        //console.log(event.results[i][0].transcript);
+                    } else {
+                        interim_transcript += event.results[i][0].transcript;
+                        //console.log('not final');
+                        //console.log(event.results[i][0].transcript);
+                    }
+                }
+                final_transcript = capitalize(final_transcript);
+                final_span.innerHTML = linebreak(final_transcript);
+                interim_span.innerHTML = linebreak(interim_transcript);
+                if (final_transcript || interim_transcript) {
+                    showButtons('inline-block');
+                }
+            };
+        }
+
+        function upgrade() {
+            start_button.style.visibility = 'hidden';
+            showInfo('info_upgrade');
+        }
+
+        var two_line = /\n\n/g;
+        var one_line = /\n/g;
+
+        function linebreak(s) {
+            return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+        }
+
+        var first_char = /\S/;
+
+        function capitalize(s) {
+            return s.replace(first_char, function(m) {
+                return m.toUpperCase();
+            });
+        }
+
+        function createEmail() {
+            var n = final_transcript.indexOf('\n');
+            if (n < 0 || n >= 80) {
+                n = 40 + final_transcript.substring(40).indexOf(' ');
+            }
+            var subject = encodeURI(final_transcript.substring(0, n));
+            var body = encodeURI(final_transcript.substring(n + 1));
+            window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+        }
+
+        function copyButton() {
+            if (recognizing) {
+                recognizing = false;
+                recognition.stop();
+            }
+            copy_button.style.display = 'none';
+            copy_info.style.display = 'inline-block';
+            showInfo('');
+        }
+
+        function emailButton() {
+            if (recognizing) {
+                create_email = true;
+                recognizing = false;
+                recognition.stop();
+            } else {
+                createEmail();
+            }
+            email_button.style.display = 'none';
+            email_info.style.display = 'inline-block';
+            showInfo('');
+        }
+
+        function startButton(event) {
+            is_Stop = false;
+            if (recognizing) {
+                recognition.stop();
+                return;
+            }
+            final_transcript = '';
+            recognition.lang = select_dialect.value;
+            recognition.start();
+            ignore_onend = false;
+            final_span.innerHTML = '';
+            interim_span.innerHTML = '';
+            showInfo('info_allow');
+            showButtons('none');
+            start_timestamp = event.timeStamp;
+        }
+
+        function stopButton(event) {
+            is_Stop = true;
+            recognizing = false;
+            recognition.stop();
+            recognizing.stop();
+            return;
+        }
+
+        function showInfo(s) {
+            if (s) {
+                for (var child = info.firstChild; child; child = child.nextSibling) {
+                    if (child.style) {
+                        child.style.display = child.id == s ? 'inline' : 'none';
+                    }
+                }
+                info.style.visibility = 'visible';
+            } else {
+                info.style.visibility = 'hidden';
+            }
+        }
+
+        var current_style;
+
+        function showButtons(style) {
+            if (style == current_style) {
+                return;
+            }
+            current_style = style;
+        }
+    </script>
 </body>
-<script>
-var langs =
-[['Bengali ',        ['bn-IN']],
-['English',          ['en-AU', 'Australia'],
-                     ['en-CA', 'Canada'],
-                     ['en-IN', 'India'],
-                     ['en-NZ', 'New Zealand'],
-                     ['en-ZA', 'South Africa'],
-                     ['en-GB', 'United Kingdom'],
-                     ['en-US', 'United States']],
- ['Hindi',           ['hi-IN']],
- ['Gujarati',        ['gu-IN']],
- ['Kannada',         ['kn-IN']],
- ['Malayalam',       ['ml-IN']],
- ['Marathi',         ['mr-IN']],
- ['Punjabi',         ['pa-Guru-IN']],
- ['Tamil',           ['ta-IN']],
- ['Telugu',          ['te-IN']],
- ['Urdu',            ['ur-IN']]];
 
-for (var i = 0; i < langs.length; i++) {
-  select_language.options[i] = new Option(langs[i][0], i);
-}
-select_language.selectedIndex = 0;
-updateCountry();
-select_dialect.selectedIndex = 0;
-showInfo('info_start');
-
-function updateCountry() {
-  for (var i = select_dialect.options.length - 1; i >= 0; i--) {
-    select_dialect.remove(i);
-  }
-  var list = langs[select_language.selectedIndex];
-  for (var i = 1; i < list.length; i++) {
-    select_dialect.options.add(new Option(list[i][1], list[i][0]));
-  }
-  select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
-}
-
-var create_email = false;
-var final_transcript = '';
-var recognizing = false;
-var ignore_onend;
-var start_timestamp;
-if (!('webkitSpeechRecognition' in window)) {
-  upgrade();
-} else {
-  start_button.style.display = 'inline-block';
-  var recognition = new webkitSpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-
-  recognition.onstart = function() {
-    recognizing = true;
-    showInfo('info_speak_now');
-    start_img.src = 'microphone.png';
-  };
-
-  recognition.onerror = function(event) {
-    if (event.error == 'no-speech') {
-      start_img.src = 'microphone.png';
-      showInfo('info_no_speech');
-      ignore_onend = true;
-    }
-    if (event.error == 'audio-capture') {
-      start_img.src = 'microphone.png';
-      showInfo('info_no_microphone');
-      ignore_onend = true;
-    }
-    if (event.error == 'not-allowed') {
-      if (event.timeStamp - start_timestamp < 100) {
-        showInfo('info_blocked');
-      } else {
-        showInfo('info_denied');
-      }
-      ignore_onend = true;
-    }
-  };
-
-  recognition.onend = function() {
-    recognizing = false;
-    if (ignore_onend) {
-      return;
-    }
-    start_img.src = 'microphone.png';
-    if (!final_transcript) {
-      showInfo('info_start');
-      return;
-    }
-    showInfo('');
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-      var range = document.createRange();
-      range.selectNode(document.getElementById('final_span'));
-      window.getSelection().addRange(range);
-    }
-    if (create_email) {
-      create_email = false;
-      createEmail();
-    }
-  };
-
-  recognition.onresult = function(event) {
-    var interim_transcript = '';
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript;
-      } else {
-        interim_transcript += event.results[i][0].transcript;
-      }
-    }
-    final_transcript = capitalize(final_transcript);
-    final_span.innerHTML = linebreak(final_transcript);
-    interim_span.innerHTML = linebreak(interim_transcript);
-    if (final_transcript || interim_transcript) {
-      showButtons('inline-block');
-    }
-  };
-}
-
-function upgrade() {
-  start_button.style.visibility = 'hidden';
-  showInfo('info_upgrade');
-}
-
-var two_line = /\n\n/g;
-var one_line = /\n/g;
-function linebreak(s) {
-  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-}
-
-var first_char = /\S/;
-function capitalize(s) {
-  return s.replace(first_char, function(m) { return m.toUpperCase(); });
-}
-
-function createEmail() {
-  var n = final_transcript.indexOf('\n');
-  if (n < 0 || n >= 80) {
-    n = 40 + final_transcript.substring(40).indexOf(' ');
-  }
-  var subject = encodeURI(final_transcript.substring(0, n));
-  var body = encodeURI(final_transcript.substring(n + 1));
-  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
-}
-
-function copyButton() {
-  if (recognizing) {
-    recognizing = false;
-    recognition.stop();
-  }
-  copy_button.style.display = 'none';
-  copy_info.style.display = 'inline-block';
-  showInfo('');
-}
-
-function emailButton() {
-  if (recognizing) {
-    create_email = true;
-    recognizing = false;
-    recognition.stop();
-  } else {
-    createEmail();
-  }
-  email_button.style.display = 'none';
-  email_info.style.display = 'inline-block';
-  showInfo('');
-}
-
-function startButton(event) {
-  if (recognizing) {
-    recognition.stop();
-    return;
-  }
-  final_transcript = '';
-  recognition.lang = select_dialect.value;
-  recognition.start();
-  ignore_onend = false;
-  final_span.innerHTML = '';
-  interim_span.innerHTML = '';
-  start_img.src = 'microphone.png';
-  showInfo('info_allow');
-  showButtons('none');
-  start_timestamp = event.timeStamp;
-}
-
-function showInfo(s) {
-  if (s) {
-    for (var child = info.firstChild; child; child = child.nextSibling) {
-      if (child.style) {
-        child.style.display = child.id == s ? 'inline' : 'none';
-      }
-    }
-    info.style.visibility = 'visible';
-  } else {
-    info.style.visibility = 'hidden';
-  }
-}
-
-var current_style;
-function showButtons(style) {
-  if (style == current_style) {
-    return;
-  }
-  current_style = style;
-  copy_button.style.display = style;
-  email_button.style.display = style;
-  copy_info.style.display = 'none';
-  email_info.style.display = 'none';
-}
-</script>
+</html>
